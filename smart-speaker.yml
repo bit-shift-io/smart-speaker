@@ -1,0 +1,23 @@
+################################################################################
+# smart speaker
+#
+# docker-compose -f smart-speaker.yml up --build
+################################################################################
+
+version: '3.7'
+
+services:
+  smart-speaker:
+    image: bitshift/smart-speaker
+    container_name: smart-speaker
+    environment:
+        - PUID=1000
+        - PGID=1000
+    restart: unless-stopped
+    network_mode: host
+    #entrypoint: ['ash']
+    tty: true
+    volumes:
+        - /run/user/1000/pipewire-0:/tmp/pipewire-0
+        - /var/run/dbus:/var/run/dbus
+        - /etc/localtime:/etc/localtime:ro

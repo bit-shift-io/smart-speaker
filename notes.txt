@@ -1,0 +1,46 @@
+TODO:
+audio to host - DONE
+mDNS
+dbus - DONE?
+pipewire server visible on network
+bluetooth
+
+Web Resources:
+https://stackoverflow.com/a/71541458/11425397
+https://github.com/fdanis-oss/pw_wp_bluetooth_rpi_speaker/tree/master
+https://www.reddit.com/r/linux4noobs/comments/18yhs7r/success_story_using_a_raspberry_pi_with_pipewire/
+https://github.com/woahbase/alpine-pulseaudio
+https://github.com/digrouz/docker-ubu-avahi
+
+
+
+
+
+Commands:
+
+wpctl status
+
+docker build -t bronson/smart-speaker .  
+docker image ls
+docker run -d -p 6379:6379 --name test bronson/smart-speaker
+docker run -it -v /run/user/1000/pipewire-0:/tmp/pipewire-0 -e XDG_RUNTIME_DIR=/tmp --rm bronson/smart-speaker /bin/ash
+docker run -it -v /run/user/1000/pipewire-0:/tmp/pipewire-0 --rm bronson/smart-speaker
+docker rm test
+
+on host device
+ps -fp $(pgrep -d, -x pipewire)
+docker run -it -v /run/user/1000/pipewire-0:/tmp/pipewire-0 -e XDG_RUNTIME_DIR=/tmp --rm alpine /bin/ash
+speaker-test -Dpipewire -c2
+
+grep -Rnw '/etc/wireplumber/' -e 'alsa_monitor.properties'
+
+
+Old:
+https://walkergriggs.com/2022/12/03/pipewire_in_docker/
+https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/1720
+https://wiki.alpinelinux.org/wiki/PipeWire#Disable_D-Bus_support
+https://stackoverflow.com/questions/28985714/run-apps-using-audio-in-a-docker-container/75775875#75775875
+https://wiki.alpinelinux.org/wiki/PipeWire
+https://pipewire.pages.freedesktop.org/wireplumber/daemon/configuration/conf_file.html
+https://wiki.archlinux.org/title/PipeWire
+https://wiki.archlinux.org/title/PulseAudio#Networked_audio
