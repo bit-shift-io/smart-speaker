@@ -8,18 +8,16 @@
 FROM alpine:latest
 MAINTAINER Bronson
 
-# Create a group and user
-#RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+ARG UID=1000
+ARG GID=1000
 
-# Tell docker that all future commands should run as the appuser user
-#USER appuser
+
 
 #WORKDIR /
 
-# needed for pipewire
-#ENV XDG_RUNTIME_DIR='/tmp'
 
-#VOLUME ["/var/run/dbus"]
+
+
 
 
 # install pipewire to get audio to host
@@ -30,14 +28,14 @@ RUN apk add \
     pipewire-zeroconf \
     alsa-utils \
     wireplumber \
-    bluez \
+    bluez bluez-openrc \
     pipewire-spa-bluez \
-    bluez-openrc \
-    dbus \
+    dbus dbus-x11 \
     openrc \
     pulseaudio-utils \
     pipewire-pulse \
     pulseaudio-utils \
+    pulseaudio \
     avahi
     
 
@@ -70,19 +68,51 @@ COPY ./src/50-network-party.conf /etc/pipewire/pipewire-pulse.conf.d/50-network-
 # bluetooth config
 RUN sed -i 's/#JustWorksRepairing.*/JustWorksRepairing = always/' /etc/bluetooth/main.conf
 
+# startup script
+COPY ./src/start.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/start.sh
+
+# make dirs
+RUN mkdir -p /run/user/1000
+RUN mkdir -p /tmp
+RUN mkdir -p /var/run/dbus
+
+# dbus fix
+RUN ulimit -n 1024
+
+# needed for pipewire
+ENV XDG_RUNTIME_DIR='/run/user/1000'
+ENV DISABLE_RTKIT='y'
+ENV PIPEWIRE_RUNTIME_DIR='/tmp'
+ENV PULSE_RUNTIME_DIR='/tmp'
+ENV DISPLAY=':0.0'
+ENV PATH='/bin:/usr/local/sbin:/usr/local/bin:/usr/bin'
+
 # open ports
 EXPOSE 4713
 EXPOSE 5353
 
+
+
+# Create a group and user
+#RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+#addgroup <user> audio
+#USER appuser
+
+# volumes
+VOLUME ["/var/run/dbus"]
+
 # dbus
-COPY ./src/start.sh /usr/local/bin
-RUN chmod +x /usr/local/bin/start.sh
+#CMD ["export $(dbus-launch)"]
+#CMD ["/bin/ash", "/usr/libexec/pipewire-launcher"]
 CMD ["/bin/ash", "/usr/local/bin/start.sh"]
 #ENTRYPOINT ["/bin/ash", "/usr/local/bin/start.sh"]
 #ENTRYPOINT ["/bin/ash"]
 #CMD ["/bin/ash"]
 
+
 #CMD ["avahi"]
-#CMD ["pipewire"]
-#CMD ["pipewire-pulse"]
-#CMD ["ash"]
+#CMD ["echo $PATH"]
+#CMD ["pipewire &"]
+#CMD ["pipewire-pulse &"]
+#CMD ["exec ash"]

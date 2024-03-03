@@ -11,6 +11,8 @@ https://github.com/fdanis-oss/pw_wp_bluetooth_rpi_speaker/tree/master
 https://www.reddit.com/r/linux4noobs/comments/18yhs7r/success_story_using_a_raspberry_pi_with_pipewire/
 https://github.com/woahbase/alpine-pulseaudio
 https://github.com/digrouz/docker-ubu-avahi
+https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Guide-PulseAudio-Tricks#setup-rtp-network-streaming-between-machines
+https://www.collabora.com/news-and-blog/blog/2022/09/02/using-a-raspberry-pi-as-a-bluetooth-speaker-with-pipewire-wireplumber/
 
 
 
@@ -20,11 +22,11 @@ Commands:
 
 wpctl status
 
-docker build -t bronson/smart-speaker .  
+docker build -t bitshift/smart-speaker .  
 docker image ls
-docker run -d -p 6379:6379 --name test bronson/smart-speaker
-docker run -it -v /run/user/1000/pipewire-0:/tmp/pipewire-0 -e XDG_RUNTIME_DIR=/tmp --rm bronson/smart-speaker /bin/ash
-docker run -it -v /run/user/1000/pipewire-0:/tmp/pipewire-0 --rm bronson/smart-speaker
+docker run -d -p 6379:6379 --name test bitshift/smart-speaker
+docker run -it -v /run/user/1000/pipewire-0:/tmp/pipewire-0 -e XDG_RUNTIME_DIR=/tmp --rm bitshift/smart-speaker /bin/ash
+docker run -it -v /run/user/1000/pipewire-0:/tmp/pipewire-0 --rm bitshift/smart-speaker
 docker rm test
 
 on host device
