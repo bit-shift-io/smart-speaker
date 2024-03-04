@@ -8,15 +8,16 @@
 FROM alpine:latest
 MAINTAINER Bronson
 
+# Create a group and user with id
+# https://stackoverflow.com/questions/49955097/how-do-i-add-a-user-when-im-using-alpine-as-a-base-image
 ARG UID=1000
 ARG GID=1000
-
-
+ARG UNAME=bitshift
+RUN addgroup -g $GID -S $UNAME
+RUN adduser -S $UNAME -G $UNAME -u $UID
+RUN addgroup $UNAME audio
 
 #WORKDIR /
-
-
-
 
 
 
@@ -74,8 +75,11 @@ RUN chmod +x /usr/local/bin/start.sh
 
 # make dirs
 RUN mkdir -p /run/user/1000
+RUN chown -R $UID:$GID /run/user/1000
 RUN mkdir -p /tmp
+RUN chown -R $UID:$GID /tmp
 RUN mkdir -p /var/run/dbus
+RUN chown -R $UID:$GID /var/run/dbus
 
 # dbus fix
 RUN ulimit -n 1024
@@ -86,7 +90,8 @@ ENV DISABLE_RTKIT='y'
 ENV PIPEWIRE_RUNTIME_DIR='/tmp'
 ENV PULSE_RUNTIME_DIR='/tmp'
 ENV DISPLAY=':0.0'
-ENV PATH='/bin:/usr/local/sbin:/usr/local/bin:/usr/bin'
+ENV PATH='/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+#ENV PATH='/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/sbin/'
 
 # open ports
 EXPOSE 4713
@@ -94,10 +99,8 @@ EXPOSE 5353
 
 
 
-# Create a group and user
-#RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-#addgroup <user> audio
-#USER appuser
+
+USER $UNAME
 
 # volumes
 VOLUME ["/var/run/dbus"]

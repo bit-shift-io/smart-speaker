@@ -10,7 +10,7 @@ services:
   smart-speaker:
     image: bitshift/smart-speaker
     container_name: smart-speaker
-    #user: 1000:1000
+    user: 1000:1000
     environment:
         - PUID=1000
         - PGID=1000
