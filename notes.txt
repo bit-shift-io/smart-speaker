@@ -6,6 +6,10 @@ pipewire server visible on network
 bluetooth
 
 Web Resources:
+https://gist.github.com/zhgoh/d0874b7d31cf649616fa9d816571ab3c
+https://wiki.archlinux.org/title/Bluetooth
+https://wiki.alpinelinux.org/wiki/Bluetooth
+
 https://stackoverflow.com/a/71541458/11425397
 https://github.com/fdanis-oss/pw_wp_bluetooth_rpi_speaker/tree/master
 https://www.reddit.com/r/linux4noobs/comments/18yhs7r/success_story_using_a_raspberry_pi_with_pipewire/
@@ -19,6 +23,11 @@ https://www.collabora.com/news-and-blog/blog/2022/09/02/using-a-raspberry-pi-as-
 
 
 Commands:
+sudo killall -9 bluetoothd
+rfkill block bluetooth
+rfkill unblock bluetooth
+systemctl stop bluetooth.service
+systemctl start bluetooth.service
 
 wpctl status
 
@@ -31,8 +40,9 @@ docker rm test
 
 on host device
 ps -fp $(pgrep -d, -x pipewire)
-docker run -it -v /run/user/1000/pipewire-0:/tmp/pipewire-0 -e XDG_RUNTIME_DIR=/tmp --rm alpine /bin/ash
+
 speaker-test -Dpipewire -c2
+ls -l /sys/class/bluetooth
 
 grep -Rnw '/etc/wireplumber/' -e 'alsa_monitor.properties'
 

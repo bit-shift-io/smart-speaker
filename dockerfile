@@ -20,14 +20,16 @@ RUN apk add \
     bluez bluez-openrc \
     pipewire-spa-bluez \
     dbus dbus-x11 \
-    openrc \
+    #openrc \
     pulseaudio-utils \
     pipewire-pulse \
     pulseaudio-utils \
     pulseaudio \
     avahi \
-    rtkit
-    
+    rtkit \
+    #python3 py3-dbus py3-gobject3 \
+    nano
+
 
 # user/groups
 ARG UID=1000
@@ -42,16 +44,7 @@ RUN addgroup $UNAME pipewire
 #WORKDIR /
 
 
-
-# services
-#RUN rc-update add dbus
-RUN rc-update add bluetooth
-
-
-
 # configs
-#COPY speaker-agent.py /
-#COPY speaker-agent.service /etc/systemd/
 
 # disable dbus in pipewire
 RUN cp -a /usr/share/pipewire /etc
@@ -69,8 +62,20 @@ COPY ./src/80-disable-dbus.lua /etc/wireplumber/main.lua.d/80-disable-dbus.lua
 # enable audio server
 COPY ./src/50-network-party.conf /etc/pipewire/pipewire-pulse.conf.d/50-network-party.conf
 
+
 # bluetooth config
+RUN sed -i 's/#Name = BlueZ/Name = smart-speaker/' /etc/bluetooth/main.conf
+RUN sed -i 's/#DiscoverableTimeout = 0/DiscoverableTimeout = 0/' /etc/bluetooth/main.conf
+RUN sed -i 's/#AlwaysPairable = true/#AlwaysPairable = true/' /etc/bluetooth/main.conf
+RUN sed -i 's/#PairableTimeout = 0/PairableTimeout = 0/' /etc/bluetooth/main.conf
 RUN sed -i 's/#JustWorksRepairing.*/JustWorksRepairing = always/' /etc/bluetooth/main.conf
+RUN sed -i 's/#AutoEnable=true/AutoEnable=true/' /etc/bluetooth/main.conf
+
+
+# bluetooth script
+COPY ./src/speaker-agent.py /usr/local/bin
+RUN chmod +x /usr/local/bin/speaker-agent.py
+#COPY speaker-agent.service /etc/systemd/
 
 # startup script
 COPY ./src/start.sh /usr/local/bin
@@ -87,13 +92,10 @@ RUN chown -R $UID:$GID /tmp
 RUN mkdir -p /var/run/dbus
 RUN chown -R $UID:$GID /var/run/dbus
 
+RUN mkdir -p /run/avahi-daemon
+RUN chown -R avahi:avahi /run/avahi-daemon
+RUN chmod 777 /run/avahi-daemon
 
-# env
-ENV XDG_RUNTIME_DIR='/run/user/1000'
-ENV DISABLE_RTKIT='y'
-ENV PIPEWIRE_RUNTIME_DIR='/tmp'
-ENV PULSE_RUNTIME_DIR='/tmp'
-ENV DISPLAY=':0.0'
 
 # open ports
 EXPOSE 4713
