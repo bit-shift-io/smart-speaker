@@ -1,0 +1,44 @@
+Attaching to smart-speaker
+smart-speaker  | launching dbus...
+smart-speaker  | unix:path=/var/run/dbus/system_bus_socket,guid=e83e09207238bab38be40c9665e7a465
+smart-speaker  | / $ [6nProcess 14 died: No such process; trying to remove PID file. (/run/avahi-daemon//pid)
+smart-speaker  | [1;33m[W][00239.487462] mod.rt       | [     module-rt.c: 1006 rtkit_get_bus()] Realtime scheduling disabled: unsufficient realtime privileges, Portal not found on session bus, and no system bus for RTKit: Not supported[0m
+smart-speaker  | [1;33m[W][00239.487559] mod.rt       | [     module-rt.c: 1006 rtkit_get_bus()] Realtime scheduling disabled: unsufficient realtime privileges, Portal not found on session bus, and no system bus for RTKit: Not supported[0m
+smart-speaker  | [1;92mM 09:31:57.700921 [1;35m            mod.rt [1;34m../src/modules/module-rt.c:1006:rtkit_get_bus:[0m Realtime scheduling disabled: unsufficient realtime privileges, Portal not found on session bus, and no system bus for RTKit: Not supported
+smart-speaker  | [1;33m[W][00239.490186] mod.protocol-pulse | [        server.c:  594 start_unix_server()] server 0x7febfb5d26f0: unlinking stale socket '/run/user/1000/pulse/native'[0m
+smart-speaker  | [1;92mM 09:31:57.702060 [1;35m           default [1;34m../src/pipewire/thread.c:105:impl_acquire_rt:[0m acquire_rt thread:0x7f5ed8e34b38 prio:-1 not implemented
+smart-speaker  | [1;31m[E][00239.491536] spa.dbus     | [          dbus.c:  332 impl_connection_get()] Failed to connect to session bus: /usr/bin/dbus-launch terminated abnormally with the following error: Authorization required, but no authorization protocol specified
+smart-speaker  | 
+smart-speaker  | Autolaunch error: X11 initialization failed.
+smart-speaker  | [0m
+smart-speaker  | [1;31m[E][00239.491550] mod.portal   | [ module-portal.c:  330 pipewire__module_init()] Failed to connect to session bus: I/O error[0m
+smart-speaker  | [1;31m[E][00239.492818] spa.dbus     | [          dbus.c:  332 impl_connection_get()] Failed to connect to session bus: /usr/bin/dbus-launch terminated abnormally with the following error: Authorization required, but no authorization protocol specified
+smart-speaker  | 
+smart-speaker  | Autolaunch error: X11 initialization failed.
+smart-speaker  | [0m
+smart-speaker  | [1;31m[E][00239.494853] spa.dbus     | [          dbus.c:  332 impl_connection_get()] Failed to connect to session bus: /usr/bin/dbus-launch terminated abnormally with the following error: Authorization required, but no authorization protocol specified
+smart-speaker  | 
+smart-speaker  | Autolaunch error: X11 initialization failed.
+smart-speaker  | [0m
+smart-speaker  | [1;31m[E][00239.494896] mod.jackdbus-detect | [module-jackdbus-:  396 pipewire__module_init()] Failed to connect to session bus: I/O error[0m
+smart-speaker  | [1;33m[W][00239.495372] default      | [        thread.c:  105 impl_acquire_rt()] acquire_rt thread:0x7fc897292b38 prio:-1 not implemented[0m
+smart-speaker  | [1;33m[W][00239.496004] default      | [        thread.c:  105 impl_acquire_rt()] acquire_rt thread:0x7febfafb8b38 prio:-1 not implemented[0m
+smart-speaker  | 536870913
+smart-speaker  | 
+smart-speaker  | / $ [6n536870914
+smart-speaker  | 536870915
+smart-speaker  | 
+smart-speaker  | / $ [6n[1;31m[E][00239.506582] mod.zeroconf-publish | [module-zeroconf-:  107 on_core_error()] error id:20 seq:38 res:-2 (No such file or directory): no global 31[0m
+smart-speaker  | [1;31m[E][00239.506601] mod.zeroconf-publish | [module-zeroconf-:  107 on_core_error()] error id:21 seq:40 res:-2 (No such file or directory): no global 33[0m
+smart-speaker  | [1;93mW 09:31:57.738211 [1;35m                pw [1;34m../spa/plugins/bluez5/upower.c:54:upower_get_percentage_properties_reply:[0m Failed to get percentage from UPower: org.freedesktop.DBus.Error.NameHasNoOwner
+smart-speaker  | [1;31m[E][00239.526732] mod.zeroconf-publish | [module-zeroconf-:  107 on_core_error()] error id:0 seq:50 res:-2 (No such file or directory): unknown resource 20 op:7[0m
+smart-speaker  | [1;31m[E][00239.526747] mod.zeroconf-publish | [module-zeroconf-:  107 on_core_error()] error id:0 seq:51 res:-2 (No such file or directory): unknown resource 21 op:7[0m
+smart-speaker  | [0:03:59.651650618] [11] [1;32m INFO [1;37mCamera [1;34mcamera_manager.cpp:284 [0mlibcamera v0.1.0
+smart-speaker  | [1;93mW 09:31:57.740745 [1;35m        spa.bluez5 [1;34m../spa/plugins/bluez5/bluez5-dbus.c:5332:get_managed_objects_reply:[0m GetManagedObjects() failed: org.freedesktop.DBus.Error.NameHasNoOwner
+smart-speaker  | [1;31m[E][00240.142434] mod.pulse-tunnel | [module-pulse-tun:  940 create_pulse_stream()] failed to connect: Access denied[0m
+smart-speaker  | [1;31m[E][00240.142715] mod.zeroconf-discover | [module-zeroconf-:  356 resolver_cb()] Can't load module: Permission denied[0m
+smart-speaker  | [1;31m[E][00240.151874] mod.pulse-tunnel | [module-pulse-tun:  940 create_pulse_stream()] failed to connect: Access denied[0m
+smart-speaker  | [1;31m[E][00240.152206] mod.zeroconf-discover | [module-zeroconf-:  356 resolver_cb()] Can't load module: Permission denied[0m
+smart-speaker  | [1;31m[E][00240.237021] mod.zeroconf-publish | [module-zeroconf-:  107 on_core_error()] error id:28 seq:105 res:-2 (No such file or directory): enum params id:16 (Spa:Enum:ParamId:ProcessLatency) failed[0m
+smart-speaker  | [1;31m[E][00240.237130] mod.zeroconf-publish | [module-zeroconf-:  107 on_core_error()] error id:29 seq:113 res:-2 (No such file or directory): enum params id:16 (Spa:Enum:ParamId:ProcessLatency) failed[0m
+smart-speaker  | [1;33m[W][00240.247015] mod.pulse-tunnel | [module-pulse-tun:  683 stream_underflow_cb()] underflow (0 suppressed)[0m

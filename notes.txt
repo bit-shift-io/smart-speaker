@@ -31,9 +31,11 @@ systemctl start bluetooth.service
 
 wpctl status
 
-docker build -t bitshift/smart-speaker .  
+docker build -t bitshift/smart-speaker .
+docker-compose -f smart-speaker.yml up --build > log.txt
+
 docker image ls
-docker run -d -p 6379:6379 --name test bitshift/smart-speaker
+
 docker run -it -v /run/user/1000/pipewire-0:/tmp/pipewire-0 -e XDG_RUNTIME_DIR=/tmp --rm bitshift/smart-speaker /bin/ash
 docker run -it -v /run/user/1000/pipewire-0:/tmp/pipewire-0 --rm bitshift/smart-speaker
 docker rm test
